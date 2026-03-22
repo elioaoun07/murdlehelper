@@ -50,16 +50,12 @@ export default function CanvasView() {
   );
 
   return (
-    <div className="flex-1 flex flex-col min-h-0">
-      <div className="flex-1 relative min-h-0">
-        <div className="absolute inset-0">
-          <InvestigationCanvas ref={canvasRef} />
-        </div>
+    <div className="flex-1 relative overflow-hidden">
+      <InvestigationCanvas ref={canvasRef} />
 
-        {/* Floating overlays */}
-        <EntityPalette onPlaceEntity={handlePlaceEntity} />
-        <NotesBar />
-      </div>
+      {/* Floating overlays */}
+      <EntityPalette onPlaceEntity={handlePlaceEntity} />
+      <NotesBar />
     </div>
   );
 }

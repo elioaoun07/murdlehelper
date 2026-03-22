@@ -66,7 +66,7 @@ export default function EntryWizard() {
       </div>
 
       {/* Content area */}
-      <div className="flex-1 overflow-y-auto px-4 sm:px-8 lg:px-16 xl:px-24 pb-24">
+      <div className="flex-1 overflow-y-auto px-4 sm:px-8 lg:px-16 xl:px-24 pb-24" style={{ touchAction: 'pan-y' }}>
         <div className="max-w-4xl mx-auto">
           {activeTab === "suspects" && <SuspectEntry />}
           {activeTab === "locations" && <LocationEntry />}

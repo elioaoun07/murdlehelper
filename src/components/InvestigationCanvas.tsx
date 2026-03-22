@@ -71,7 +71,7 @@ const InvestigationCanvas = forwardRef<CanvasHandle>(function InvestigationCanva
   );
 
   return (
-    <div className="w-full h-full">
+    <div style={{ position: 'absolute', inset: 0 }}>
       <Tldraw onMount={handleMount} />
     </div>
   );

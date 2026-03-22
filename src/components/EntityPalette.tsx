@@ -50,9 +50,9 @@ export default function EntityPalette({ onPlaceEntity }: EntityPaletteProps) {
   ];
 
   return (
-    <div className={`fixed top-16 left-3 z-40 transition-all duration-300 ${
-      collapsed ? "w-auto" : "w-64"
-    }`}>
+    <div className={`absolute top-2 left-2 z-40 transition-all duration-300 ${
+      collapsed ? "w-auto" : "w-56 sm:w-64"
+    }`} style={{ touchAction: 'auto' }}>
       {collapsed ? (
         <button
           onClick={() => setCollapsed(false)}

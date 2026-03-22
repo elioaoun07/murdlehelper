@@ -17,6 +17,13 @@ export const metadata: Metadata = {
   description: "Interactive helper for solving Murdle book puzzles",
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -27,7 +34,7 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
     >
-      <body className="min-h-full flex flex-col bg-zinc-950 text-zinc-100">
+      <body className="h-full flex flex-col bg-zinc-950 text-zinc-100 overflow-hidden">
         {children}
       </body>
     </html>

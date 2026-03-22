@@ -8,9 +8,9 @@ export default function NotesBar() {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div className={`fixed bottom-0 right-0 z-40 transition-all duration-300 ${
-      expanded ? "w-80 h-[50vh]" : "w-auto h-auto"
-    }`}>
+    <div className={`absolute bottom-0 right-0 z-40 transition-all duration-300 ${
+      expanded ? "w-72 sm:w-80 h-[50vh]" : "w-auto h-auto"
+    }`} style={{ touchAction: 'auto' }}>
       {expanded ? (
         <div className="h-full flex flex-col bg-zinc-900/95 backdrop-blur-md border-l border-t border-zinc-700/50 rounded-tl-xl shadow-2xl animate-fade-in">
           {/* Header */}

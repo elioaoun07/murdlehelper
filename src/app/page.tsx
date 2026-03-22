@@ -20,7 +20,7 @@ function Dashboard() {
   }
 
   return (
-    <div className="flex flex-col flex-1 min-h-0">
+    <div className="flex flex-col h-full overflow-hidden">
       <TopBar onToggleScoreboard={() => setShowScoreboard((v) => !v)} />
 
       {state.wizardStep === "entry" ? (
