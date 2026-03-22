@@ -13,15 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Murdle Helper — Detective Dashboard",
+  title: "Murdle Helper",
   description: "Interactive helper for solving Murdle book puzzles",
-};
-
-export const viewport = {
-  width: "device-width",
-  initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
 };
 
 export default function RootLayout({
@@ -32,10 +25,15 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
+      className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
     >
-      <body className="h-full flex flex-col bg-zinc-950 text-zinc-100 overflow-hidden">
-        {children}
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+      </head>
+      <body className="bg-zinc-950 text-zinc-100">
+        <div id="app-root" className="fixed inset-0 flex flex-col overflow-hidden">
+          {children}
+        </div>
       </body>
     </html>
   );

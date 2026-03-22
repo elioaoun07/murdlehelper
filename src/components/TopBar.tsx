@@ -76,56 +76,50 @@ export default function TopBar({ onToggleScoreboard }: TopBarProps) {
   }
 
   return (
-    <header className="flex items-center gap-3 px-4 py-2.5 bg-zinc-900/80 backdrop-blur-sm border-b border-zinc-800 shrink-0 z-50">
+    <header className="flex items-center gap-2 px-3 py-2 bg-zinc-900/80 backdrop-blur-sm border-b border-zinc-800 shrink-0 z-50">
       {/* Puzzle Name */}
       <input
         type="text"
-        placeholder="Puzzle name…"
+        placeholder="Puzzle…"
         value={state.puzzleName}
         onChange={(e) => dispatch({ type: "SET_PUZZLE_NAME", payload: e.target.value })}
-        className="bg-zinc-800/60 border border-zinc-700/50 rounded-lg px-3 py-1.5 text-amber-100 placeholder-zinc-600 text-sm w-40 focus:outline-none focus:border-amber-600 transition-colors"
+        className="bg-zinc-800/60 border border-zinc-700/50 rounded-lg px-2 py-1.5 text-amber-100 placeholder-zinc-600 text-sm w-24 sm:w-36 focus:outline-none focus:border-amber-600 transition-colors min-w-0"
       />
 
       {/* Timer */}
-      <div className="flex items-center gap-2 ml-auto">
-        <span className="font-mono text-lg text-amber-300 tabular-nums tracking-wider">
+      <div className="flex items-center gap-1.5 ml-auto">
+        <span className="font-mono text-sm sm:text-lg text-amber-300 tabular-nums tracking-wider">
           {formatTime(elapsed)}
         </span>
         <button
           onClick={toggleTimer}
-          className="px-3 py-1 rounded-lg text-xs font-medium bg-amber-700 hover:bg-amber-600 text-white transition-colors"
+          className="px-2 py-1 rounded-lg text-xs font-medium bg-amber-700 hover:bg-amber-600 text-white transition-colors"
         >
-          {state.timerRunning ? "Pause" : "Start"}
-        </button>
-        <button
-          onClick={() => dispatch({ type: "RESET_TIMER" })}
-          className="px-2 py-1 rounded text-xs text-zinc-500 hover:text-white transition-colors"
-        >
-          Reset
+          {state.timerRunning ? "⏸" : "▶"}
         </button>
       </div>
 
       {/* Actions */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1.5">
         <button
           onClick={handleSolve}
-          className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-green-700 hover:bg-green-600 text-white transition-colors"
+          className="px-2 sm:px-3 py-1.5 rounded-lg text-xs font-semibold bg-green-700 hover:bg-green-600 text-white transition-colors"
         >
-          ✓ Solved!
+          ✓
         </button>
         <button
           onClick={handleReset}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
+          className={`px-2 sm:px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
             confirmReset
               ? "bg-red-700 hover:bg-red-600 text-white"
               : "bg-zinc-700/80 hover:bg-zinc-600 text-zinc-300"
           }`}
         >
-          {confirmReset ? "Confirm?" : "Reset"}
+          {confirmReset ? "Sure?" : "↺"}
         </button>
         <button
           onClick={onToggleScoreboard}
-          className="px-3 py-1.5 rounded-lg text-xs font-medium bg-zinc-700/80 hover:bg-zinc-600 text-zinc-300 transition-colors"
+          className="px-2 py-1.5 rounded-lg text-xs font-medium bg-zinc-700/80 hover:bg-zinc-600 text-zinc-300 transition-colors"
         >
           🏆
         </button>

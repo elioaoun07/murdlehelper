@@ -19,7 +19,21 @@ export interface Weapon {
   description?: string;
 }
 
-export type WizardStep = "entry" | "canvas";
+export type WizardStep = "entry" | "board";
+
+export interface BoardCard {
+  id: string;
+  entityType: "suspect" | "location" | "weapon";
+  entityId: string;
+  x: number;
+  y: number;
+}
+
+export interface BoardLine {
+  id: string;
+  fromCardId: string;
+  toCardId: string;
+}
 
 export interface PuzzleState {
   puzzleName: string;
@@ -28,10 +42,11 @@ export interface PuzzleState {
   locations: Location[];
   weapons: Weapon[];
   notes: string;
+  boardCards: BoardCard[];
+  boardLines: BoardLine[];
   timerStartedAt: number | null;
   timerElapsed: number;
   timerRunning: boolean;
-  canvasSnapshot: string | null;
 }
 
 export interface PuzzleRecord {
@@ -48,8 +63,9 @@ export const createEmptyPuzzleState = (): PuzzleState => ({
   locations: [],
   weapons: [],
   notes: "",
+  boardCards: [],
+  boardLines: [],
   timerStartedAt: null,
   timerElapsed: 0,
   timerRunning: false,
-  canvasSnapshot: null,
 });

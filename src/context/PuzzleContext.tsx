@@ -14,6 +14,8 @@ import type {
   Location,
   Weapon,
   WizardStep,
+  BoardCard,
+  BoardLine,
 } from "@/types";
 import { createEmptyPuzzleState } from "@/types";
 import { savePuzzleState, loadPuzzleState, clearPuzzleState } from "@/lib/db";
@@ -34,10 +36,14 @@ type Action =
   | { type: "UPDATE_WEAPON"; payload: Weapon }
   | { type: "REMOVE_WEAPON"; payload: string }
   | { type: "SET_NOTES"; payload: string }
+  | { type: "ADD_BOARD_CARD"; payload: BoardCard }
+  | { type: "MOVE_BOARD_CARD"; payload: { id: string; x: number; y: number } }
+  | { type: "REMOVE_BOARD_CARD"; payload: string }
+  | { type: "ADD_BOARD_LINE"; payload: BoardLine }
+  | { type: "REMOVE_BOARD_LINE"; payload: string }
   | { type: "START_TIMER" }
   | { type: "PAUSE_TIMER"; payload: number }
   | { type: "RESET_TIMER" }
-  | { type: "SET_CANVAS_SNAPSHOT"; payload: string | null }
   | { type: "RESET_ALL" };
 
 function reducer(state: PuzzleState, action: Action): PuzzleState {
@@ -92,6 +98,27 @@ function reducer(state: PuzzleState, action: Action): PuzzleState {
       };
     case "SET_NOTES":
       return { ...state, notes: action.payload };
+    case "ADD_BOARD_CARD":
+      return { ...state, boardCards: [...state.boardCards, action.payload] };
+    case "MOVE_BOARD_CARD":
+      return {
+        ...state,
+        boardCards: state.boardCards.map((c) =>
+          c.id === action.payload.id ? { ...c, x: action.payload.x, y: action.payload.y } : c
+        ),
+      };
+    case "REMOVE_BOARD_CARD":
+      return {
+        ...state,
+        boardCards: state.boardCards.filter((c) => c.id !== action.payload),
+        boardLines: state.boardLines.filter(
+          (l) => l.fromCardId !== action.payload && l.toCardId !== action.payload
+        ),
+      };
+    case "ADD_BOARD_LINE":
+      return { ...state, boardLines: [...state.boardLines, action.payload] };
+    case "REMOVE_BOARD_LINE":
+      return { ...state, boardLines: state.boardLines.filter((l) => l.id !== action.payload) };
     case "START_TIMER":
       return { ...state, timerStartedAt: Date.now(), timerRunning: true };
     case "PAUSE_TIMER":
@@ -108,8 +135,6 @@ function reducer(state: PuzzleState, action: Action): PuzzleState {
         timerStartedAt: null,
         timerRunning: false,
       };
-    case "SET_CANVAS_SNAPSHOT":
-      return { ...state, canvasSnapshot: action.payload };
     case "RESET_ALL":
       return createEmptyPuzzleState();
     default:
@@ -143,9 +168,13 @@ export function PuzzleProvider({ children }: { children: React.ReactNode }) {
         const migrated: PuzzleState = {
           ...createEmptyPuzzleState(),
           ...saved,
-          wizardStep: saved.wizardStep ?? "entry",
+          wizardStep: ((saved.wizardStep as string) === "canvas" ? "board" : saved.wizardStep) ?? "entry",
           notes: saved.notes ?? "",
+          boardCards: saved.boardCards ?? [],
+          boardLines: saved.boardLines ?? [],
         };
+        // Remove legacy fields
+        delete (migrated as unknown as Record<string, unknown>).canvasSnapshot;
         dispatch({ type: "LOAD_STATE", payload: migrated });
       }
       setLoaded(true);

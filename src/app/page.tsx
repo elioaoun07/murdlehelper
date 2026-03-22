@@ -4,7 +4,7 @@ import { useState } from "react";
 import { PuzzleProvider, usePuzzle } from "@/context/PuzzleContext";
 import TopBar from "@/components/TopBar";
 import EntryWizard from "@/components/EntryWizard";
-import CanvasView from "@/components/CanvasView";
+import BoardView from "@/components/CanvasView";
 import Scoreboard from "@/components/Scoreboard";
 
 function Dashboard() {
@@ -26,7 +26,7 @@ function Dashboard() {
       {state.wizardStep === "entry" ? (
         <EntryWizard />
       ) : (
-        <CanvasView />
+        <BoardView />
       )}
 
       {showScoreboard && (
